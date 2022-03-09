@@ -1,11 +1,10 @@
 package app
 
 import (
-	"fmt"
-	"geobase/config"
-	"geobase/internal/api"
-	"geobase/internal/repository"
-	"geobase/internal/usecase"
+	"robomarkets-test/config"
+	"robomarkets-test/internal/api"
+	"robomarkets-test/internal/repository"
+	"robomarkets-test/internal/usecase"
 )
 
 // Run creates app
@@ -16,6 +15,5 @@ func Run(cfg *config.Config) {
 	}
 	uc := usecase.NewGeoUsecase(repo)
 	_ = uc
-	fmt.Println(111)
 	api.StartServer(cfg, uc)
 }

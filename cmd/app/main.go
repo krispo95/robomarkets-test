@@ -1,9 +1,9 @@
 package main
 
 import (
-	"geobase/config"
-	"geobase/internal/app"
 	"log"
+	"robomarkets-test/config"
+	"robomarkets-test/internal/app"
 )
 
 func main() {

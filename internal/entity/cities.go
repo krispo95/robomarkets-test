@@ -1,5 +1,5 @@
 package entity
 
-const citySizeBts = 96
+const CitySizeBts = 96
 
 type City uint32

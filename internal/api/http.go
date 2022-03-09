@@ -4,11 +4,11 @@ import (
 	"encoding/json"
 	"flag"
 	"fmt"
-	"geobase/config"
-	"geobase/internal/repository"
-	"geobase/internal/usecase"
 	"github.com/valyala/fasthttp"
 	"log"
+	"robomarkets-test/config"
+	"robomarkets-test/internal/repository"
+	"robomarkets-test/internal/usecase"
 )
 
 func StartServer(cfg *config.Config, uc usecase.Usecase) {
@@ -18,10 +18,8 @@ func StartServer(cfg *config.Config, uc usecase.Usecase) {
 	requestHandler := func(ctx *fasthttp.RequestCtx) {
 		switch string(ctx.Path()) {
 		case "/ip/location":
-			fmt.Println("1")
 			IpLocationHandler(ctx, uc)
 		case "/city/locations":
-			fmt.Println("2")
 			CityLocationHandler(ctx, uc)
 		default:
 

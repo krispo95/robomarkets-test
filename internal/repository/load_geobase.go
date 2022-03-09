@@ -4,9 +4,9 @@ import (
 	"bytes"
 	"encoding/binary"
 	"errors"
-	"geobase/internal/entity"
 	"io"
 	"math"
+	"robomarkets-test/internal/entity"
 )
 
 func ParseHeader(file io.Reader) (entity.Header, error) {

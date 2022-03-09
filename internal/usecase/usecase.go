@@ -1,8 +1,8 @@
 package usecase
 
 import (
-	"geobase/internal/entity"
-	"geobase/internal/repository"
+	"robomarkets-test/internal/entity"
+	"robomarkets-test/internal/repository"
 	"strings"
 )
 
@@ -21,14 +21,20 @@ func NewGeoUsecase(repo repository.Repository) GeoUseCase {
 	}
 }
 
+// FindLocationByName - binary searching location
 func (g GeoUseCase) FindLocationByName(name string) *entity.Location {
 	var left, right = 0, int(g.repository.GetRecordsNumber())
 	for left <= right {
 		mid := (left + right) / 2
+		// get location index by location id (in cities)
 		location := g.repository.GetLocationByLocationIndex(g.repository.GetCityById(mid))
 		if location == nil {
+			//impossible case
 			panic("city is nil")
 		}
+		// compare alphabetically
+		// if name "bigger"(1) - search right, else (-1) - left
+		// if equal (0) - found
 		switch strings.Compare(name, location.City) {
 		case 0:
 			return location
@@ -48,12 +54,15 @@ func (g GeoUseCase) FindLocationByIP(ip uint32) *entity.Location {
 		mid := (left + right) / 2
 		rng := g.repository.GetRangeById(mid)
 		if rng == nil {
+			//impossible case
 			panic("range is nil")
 		}
+		// if ip is in range - found
 		if rng.IsInside(ip) {
 			foundRange = rng
 			break
 		}
+		// if ip is bigger than range - search right, else - left
 		if rng.IsBigger(ip) {
 			left = mid + 1
 		} else {
@@ -61,6 +70,7 @@ func (g GeoUseCase) FindLocationByIP(ip uint32) *entity.Location {
 		}
 	}
 	if foundRange != nil {
+		// get location index by location id (from ranges)
 		return g.repository.GetLocationByLocationIndex(entity.City(foundRange.LocationIndex))
 	}
 	return nil

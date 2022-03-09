@@ -1,9 +1,8 @@
 package repository
 
 import (
-	"fmt"
-	"geobase/internal/entity"
 	"os"
+	"robomarkets-test/internal/entity"
 )
 
 type Repository interface {
@@ -47,17 +46,11 @@ func NewGeoRepository(filePath string) (*GeoRepo, error) {
 		return nil, err
 	}
 
-	fmt.Println("done")
-
 	return &geoRepo, nil
 }
 
-func (g *GeoRepo) FindCityByIP(ip uint32) *entity.City {
-	return nil
-}
-
 func (g *GeoRepo) GetLocationByLocationIndex(locID entity.City) *entity.Location {
-	id := locID / 96
+	id := locID / entity.CitySizeBts
 	return &g.locations[id]
 }
 

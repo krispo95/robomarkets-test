@@ -1,0 +1,63 @@
+kristinastupnikova@MacBook-Pro-Kristina Geobase % go-wrk -c 1 -d 10  "http://localhost:8080/ip/location?ip=123.234.123.234"
+
+Running 10s test @ http://localhost:8080/ip/location?ip=123.234.123.234
+  1 goroutine(s) running concurrently
+164369 requests in 9.525792832s, 42.01MB read
+Requests/sec:           17255.15
+Transfer/sec:           4.41MB
+Avg Req Time:           57.953µs
+Fastest Request:        39.77µs
+Slowest Request:        4.933466ms
+Number of Errors:       0
+
+
+kristinastupnikova@MacBook-Pro-Kristina Geobase % go-wrk -c 10 -d 5  "http://localhost:8080/ip/location?ip=123.234.123.234"
+
+Running 5s test @ http://localhost:8080/ip/location?ip=123.234.123.234
+  10 goroutine(s) running concurrently
+408768 requests in 4.778378164s, 104.47MB read
+Requests/sec:           85545.34
+Transfer/sec:           21.86MB
+Avg Req Time:           116.897µs
+Fastest Request:        34.986µs
+Slowest Request:        3.906752ms
+Number of Errors:       0
+
+
+kristinastupnikova@MacBook-Pro-Kristina Geobase % go-wrk -c 100 -d 5  "http://localhost:8080/ip/location?ip=123.234.123.234"
+
+Running 5s test @ http://localhost:8080/ip/location?ip=123.234.123.234
+  100 goroutine(s) running concurrently
+314849 requests in 4.409296215s, 80.47MB read
+Requests/sec:           71405.73
+Transfer/sec:           18.25MB
+Avg Req Time:           1.400447ms
+Fastest Request:        41.363µs
+Slowest Request:        29.017174ms
+Number of Errors:       0
+
+
+kristinastupnikova@MacBook-Pro-Kristina Geobase % go-wrk -c 300 -d 5  "http://localhost:8080/ip/location?ip=123.234.123.234"
+
+Running 5s test @ http://localhost:8080/ip/location?ip=123.234.123.234
+  300 goroutine(s) running concurrently
+604009 requests in 4.768605523s, 154.38MB read
+Requests/sec:           126663.65
+Transfer/sec:           32.37MB
+Avg Req Time:           2.368477ms
+Fastest Request:        41.704µs
+Slowest Request:        62.139828ms
+Number of Errors:       0
+
+
+kristinastupnikova@MacBook-Pro-Kristina Geobase % go-wrk -c 1 -d 60  "http://localhost:8080/ip/location?ip=123.234.123.234"
+
+Running 60s test @ http://localhost:8080/ip/location?ip=123.234.123.234
+  1 goroutine(s) running concurrently
+966006 requests in 57.15765789s, 246.90MB read
+Requests/sec:           16900.73
+Transfer/sec:           4.32MB
+Avg Req Time:           59.169µs
+Fastest Request:        40.42µs
+Slowest Request:        10.931592ms
+Number of Errors:       0
