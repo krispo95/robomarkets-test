@@ -29,14 +29,11 @@ func StartServer(cfg *config.Config, uc usecase.Usecase) {
 	// Start HTTP server.
 	if len(cfg.Port) > 0 {
 		log.Printf("Starting HTTP server on %q", cfg.Port)
-		go func() {
-			if err := fasthttp.ListenAndServe(cfg.Port, requestHandler); err != nil {
-				log.Fatalf("error in ListenAndServe: %s", err)
-			}
-		}()
+		// locks here
+		if err := fasthttp.ListenAndServe(cfg.Port, requestHandler); err != nil {
+			log.Fatalf("error in ListenAndServe: %s", err)
+		}
 	}
-
-	select {}
 }
 
 func CityLocationHandler(ctx *fasthttp.RequestCtx, uc usecase.Usecase) {
@@ -52,7 +49,7 @@ func CityLocationHandler(ctx *fasthttp.RequestCtx, uc usecase.Usecase) {
 
 func IpLocationHandler(ctx *fasthttp.RequestCtx, uc usecase.Usecase) {
 	ipBts := ctx.QueryArgs().Peek("ip")
-	location := uc.FindLocationByIP(repository.ParseUint32(ipBts))
+	location := uc.FindLocationByIP(usecase.Ip2Uint32(repository.ParseString(ipBts)))
 	bts, err := json.Marshal(location)
 	if err != nil {
 		fmt.Println(err)

@@ -1,6 +1,9 @@
 package usecase
 
 import (
+	"bytes"
+	"encoding/binary"
+	"net"
 	"robomarkets-test/internal/entity"
 	"robomarkets-test/internal/repository"
 	"strings"
@@ -21,7 +24,7 @@ func NewGeoUsecase(repo repository.Repository) GeoUseCase {
 	}
 }
 
-// FindLocationByName - binary searching location
+// FindLocationByName - binary searching location by city name
 func (g GeoUseCase) FindLocationByName(name string) *entity.Location {
 	var left, right = 0, int(g.repository.GetRecordsNumber())
 	for left <= right {
@@ -47,6 +50,7 @@ func (g GeoUseCase) FindLocationByName(name string) *entity.Location {
 	return nil
 }
 
+// FindLocationByIP - binary searching location by ip
 func (g GeoUseCase) FindLocationByIP(ip uint32) *entity.Location {
 	var left, right = 0, int(g.repository.GetRecordsNumber())
 	var foundRange *entity.Range
@@ -74,4 +78,10 @@ func (g GeoUseCase) FindLocationByIP(ip uint32) *entity.Location {
 		return g.repository.GetLocationByLocationIndex(entity.City(foundRange.LocationIndex))
 	}
 	return nil
+}
+
+func Ip2Uint32(ip string) uint32 {
+	var long uint32
+	binary.Read(bytes.NewBuffer(net.ParseIP(ip).To4()), binary.BigEndian, &long)
+	return long
 }

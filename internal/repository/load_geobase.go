@@ -24,7 +24,7 @@ func ParseHeader(file io.Reader) (entity.Header, error) {
 	header.Version = ParseInt32(headerBts[:4])
 	headerBts = headerBts[4:]
 
-	header.Name = string(bytes.Trim(headerBts[:32], "\x00"))
+	header.Name = ParseString(headerBts[:32])
 	headerBts = headerBts[32:]
 
 	header.Timestamp = ParseUint64(headerBts[:8])
@@ -107,19 +107,19 @@ func ParseLocations(file io.Reader, count int) ([]entity.Location, error) {
 		}
 		addr := entity.Location{}
 
-		addr.Country = string(bytes.Trim(bts[:8], "\x00"))
+		addr.Country = ParseString(bts[:8])
 		bts = bts[8:]
 
-		addr.Region = string(bytes.Trim(bts[:12], "\x00"))
+		addr.Region = ParseString(bts[:12])
 		bts = bts[12:]
 
-		addr.Postal = string(bytes.Trim(bts[:12], "\x00"))
+		addr.Postal = ParseString(bts[:12])
 		bts = bts[12:]
 
-		addr.City = string(bytes.Trim(bts[:24], "\x00"))
+		addr.City = ParseString(bts[:24])
 		bts = bts[24:]
 
-		addr.Organization = string(bytes.Trim(bts[:32], "\x00"))
+		addr.Organization = ParseString(bts[:32])
 		bts = bts[32:]
 
 		addr.Latitude = ParseFloat32(bts[:4])
@@ -148,4 +148,8 @@ func ParseUint64(bts []byte) uint64 {
 
 func ParseFloat32(bts []byte) float32 {
 	return math.Float32frombits(binary.LittleEndian.Uint32(bts))
+}
+
+func ParseString(bts []byte) string {
+	return string(bytes.Trim(bts, "\x00"))
 }

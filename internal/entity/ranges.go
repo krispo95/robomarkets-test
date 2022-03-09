@@ -7,7 +7,7 @@ type Range struct {
 }
 
 func (r *Range) IsInside(ip uint32) bool {
-	if ip >= r.IpFrom || ip <= r.IpTo {
+	if ip >= r.IpFrom && ip <= r.IpTo {
 		return true
 	}
 	return false

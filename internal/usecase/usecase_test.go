@@ -13,7 +13,7 @@ func Benchmark_TestGeoUseCase_FindLocationByName(b *testing.B) {
 	uc := NewGeoUsecase(repo)
 	loc := uc.FindLocationByName("cit_Osumi")
 	if loc == nil || loc.City != "cit_Osumi" {
-		panic("not valid answer")
+		b.Fatal("not valid answer")
 	}
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
@@ -24,11 +24,12 @@ func Benchmark_TestGeoUseCase_FindLocationByName(b *testing.B) {
 func Benchmark_TestGeoUseCase_FindLocationByIP(b *testing.B) {
 	repo, err := repository.NewGeoRepository("../../docs/geobase.dat")
 	if err != nil {
-		panic(err)
+		b.Fatal(err)
 	}
 	uc := NewGeoUsecase(repo)
+	ip := Ip2Uint32("123.234.123.234")
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
-		uc.FindLocationByIP(repository.ParseUint32([]byte("123.234.123.234")))
+		uc.FindLocationByIP(ip)
 	}
 }
